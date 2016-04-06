@@ -1,15 +1,20 @@
 import math
+from collections import namedtuple
 
 
 MARATHON = 42.195
 HALF_MARATHON = MARATHON / 2
 
 
+PaceMinpkm = namedtuple("Pace", "minutes seconds")
+
+
 def kmph_to_minpkm(kmph):
 	minpkm = 1 / (kmph/60)
 	minutes = math.floor(minpkm)
 	seconds = round(60*(minpkm-minutes),1)
-	return {"minutes": minutes, "seconds": seconds}
+	#print(PaceMinpkm(minutes, seconds))
+	return PaceMinpkm(minutes, seconds)
 
 def minpkm_to_kmph(minutes, seconds=None):
 	if seconds is not None:
@@ -29,15 +34,13 @@ def pace_needed_minpkm(km, hours=0, minutes=0, seconds=0):
 	minpkm = spkm / 60
 	minutes = math.floor(minpkm)
 	seconds = round(60*(minpkm-minutes),1)
-	return {"minutes":minutes, "seconds":seconds}
+	return PaceMinpkm(minutes,seconds)
 
 def time_needed_at_pace_minpkm(minutes, seconds):
 	pass # todo
 
 def time_needed_at_pace_kmph(kmph):
 	pass # todo
-
-# todo: use NamedTuple instead of dict with "minutes" and "seconds".
 
 # todo: refactor: minpkm vs kmph as keywordarg with default minpkm OR EVEN BETTER
 # generic function called e.g. pace_needed with keywordarg and a very simple
